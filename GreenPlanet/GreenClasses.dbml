@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DB_Green_Planet" Class="GreenClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-KQP37PF\SQLEXPRESS;Initial Catalog=DB_Green_Planet;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DB_Green_PlanetConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Agenda" Member="Agendas">
+    <Type Name="Agenda">
+      <Column Name="idAgenda" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idColaborador" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idRecoleccion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Colaboradore_Agenda" Member="Colaboradore" ThisKey="idColaborador" OtherKey="idColaborador" Type="Colaboradore" IsForeignKey="true" />
+      <Association Name="Recoleccion_Agenda" Member="Recoleccion" ThisKey="idRecoleccion" OtherKey="idRecoleccion" Type="Recoleccion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Roles" Member="Roles">
+    <Type Name="Role">
+      <Column Name="descripcionRoles" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="idRoles" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Role_Cliente" Member="Clientes" ThisKey="idRoles" OtherKey="idRoles" Type="Cliente" />
+      <Association Name="Role_Colaboradore" Member="Colaboradores" ThisKey="idRoles" OtherKey="idRoles" Type="Colaboradore" />
+      <Association Name="Role_ComercioAfiliado" Member="ComercioAfiliados" ThisKey="idRoles" OtherKey="idRoles" Type="ComercioAfiliado" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AreaCobertura" Member="AreaCoberturas">
+    <Type Name="AreaCobertura">
+      <Column Name="idAreaCobertura" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idProvincia" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="idColaborador" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Colaboradore_AreaCobertura" Member="Colaboradore" ThisKey="idColaborador" OtherKey="idColaborador" Type="Colaboradore" IsForeignKey="true" />
+      <Association Name="Provincia_AreaCobertura" Member="Provincia" ThisKey="idProvincia" OtherKey="idProvincia" Type="Provincia" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Canton" Member="Cantons">
+    <Type Name="Canton">
+      <Column Name="idCanton" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombreCanton" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="idProvincia" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Association Name="Canton_Distrito" Member="Distritos" ThisKey="idCanton" OtherKey="idCanton" Type="Distrito" />
+      <Association Name="Provincia_Canton" Member="Provincia" ThisKey="idProvincia" OtherKey="idProvincia" Type="Provincia" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Clientes" Member="Clientes">
+    <Type Name="Cliente">
+      <Column Name="idCliente" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idPersona" Type="System.String" DbType="VarChar(16) NOT NULL" CanBeNull="false" />
+      <Column Name="idDireccion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idRoles" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="nombreUsuario" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="contrasena" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="correo" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="tel" Type="System.String" DbType="VarChar(8)" CanBeNull="true" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="hojas" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Association Name="Cliente_Cupone" Member="Cupones" ThisKey="idCliente" OtherKey="idCliente" Type="Cupone" />
+      <Association Name="Cliente_Recoleccion" Member="Recoleccions" ThisKey="idCliente" OtherKey="idCliente" Type="Recoleccion" />
+      <Association Name="Role_Cliente" Member="Role" ThisKey="idRoles" OtherKey="idRoles" Type="Role" IsForeignKey="true" />
+      <Association Name="Direccione_Cliente" Member="Direccione" ThisKey="idDireccion" OtherKey="idDireccion" Type="Direccione" IsForeignKey="true" />
+      <Association Name="Persona_Cliente" Member="Persona" ThisKey="idPersona" OtherKey="idPersona" Type="Persona" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Colaboradores" Member="Colaboradores">
+    <Type Name="Colaboradore">
+      <Column Name="idColaborador" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idPersona" Type="System.String" DbType="VarChar(16) NOT NULL" CanBeNull="false" />
+      <Column Name="idRoles" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="nombreUsuario" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="contrasena" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="correo" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="tel" Type="System.String" DbType="VarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Colaboradore_Agenda" Member="Agendas" ThisKey="idColaborador" OtherKey="idColaborador" Type="Agenda" />
+      <Association Name="Colaboradore_AreaCobertura" Member="AreaCoberturas" ThisKey="idColaborador" OtherKey="idColaborador" Type="AreaCobertura" />
+      <Association Name="Role_Colaboradore" Member="Role" ThisKey="idRoles" OtherKey="idRoles" Type="Role" IsForeignKey="true" />
+      <Association Name="Persona_Colaboradore" Member="Persona" ThisKey="idPersona" OtherKey="idPersona" Type="Persona" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ComercioAfiliado" Member="ComercioAfiliados">
+    <Type Name="ComercioAfiliado">
+      <Column Name="idComercioAfiliado" Type="System.Byte" DbType="TinyInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idRoles" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="nombreComercio" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="nombreUsuario" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="contrasena" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="telefono" Type="System.String" DbType="VarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="correo" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="ComercioAfiliado_DetalleCupon" Member="DetalleCupons" ThisKey="idComercioAfiliado" OtherKey="idComercioAfiliado" Type="DetalleCupon" />
+      <Association Name="Role_ComercioAfiliado" Member="Role" ThisKey="idRoles" OtherKey="idRoles" Type="Role" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CuentasXcobrar" Member="CuentasXcobrars">
+    <Type Name="CuentasXcobrar">
+      <Column Name="idCuentasXcobrar" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idInventarioMaterial" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="pesoEntregado" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
+      <Column Name="monto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="InventarioMaterial_CuentasXcobrar" Member="InventarioMaterial" ThisKey="idInventarioMaterial" OtherKey="idInventarioMaterial" Type="InventarioMaterial" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Cupones" Member="Cupones">
+    <Type Name="Cupone">
+      <Column Name="idCupones" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idDetalleCupon" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idCliente" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idEstadosCupon" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="codigoCupon" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="fechaIngreso" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="fechaVencimiento" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Cliente_Cupone" Member="Cliente" ThisKey="idCliente" OtherKey="idCliente" Type="Cliente" IsForeignKey="true" />
+      <Association Name="DetalleCupon_Cupone" Member="DetalleCupon" ThisKey="idDetalleCupon" OtherKey="idDetalleCupon" Type="DetalleCupon" IsForeignKey="true" />
+      <Association Name="EstadosCupon_Cupone" Member="EstadosCupon" ThisKey="idEstadosCupon" OtherKey="idEstadosCupon" Type="EstadosCupon" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetalleCupon" Member="DetalleCupons">
+    <Type Name="DetalleCupon">
+      <Column Name="idDetalleCupon" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idComercioAfiliado" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="DescCupon" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CantidadHojas" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="imagen" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Association Name="DetalleCupon_Cupone" Member="Cupones" ThisKey="idDetalleCupon" OtherKey="idDetalleCupon" Type="Cupone" />
+      <Association Name="ComercioAfiliado_DetalleCupon" Member="ComercioAfiliado" ThisKey="idComercioAfiliado" OtherKey="idComercioAfiliado" Type="ComercioAfiliado" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Direcciones" Member="Direcciones">
+    <Type Name="Direccione">
+      <Column Name="idDireccion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idDistrito" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="nombreDireccion" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="Direccione_Cliente" Member="Clientes" ThisKey="idDireccion" OtherKey="idDireccion" Type="Cliente" />
+      <Association Name="Direccione_DireccionXrecoleccion" Member="DireccionXrecoleccions" ThisKey="idDireccion" OtherKey="idDireccion" Type="DireccionXrecoleccion" />
+      <Association Name="Distrito_Direccione" Member="Distrito" ThisKey="idDistrito" OtherKey="idDistrito" Type="Distrito" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DireccionXrecoleccion" Member="DireccionXrecoleccions">
+    <Type Name="DireccionXrecoleccion">
+      <Column Name="idDireccionXrecoleccion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idRecoleccion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idDireccion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Direccione_DireccionXrecoleccion" Member="Direccione" ThisKey="idDireccion" OtherKey="idDireccion" Type="Direccione" IsForeignKey="true" />
+      <Association Name="Recoleccion_DireccionXrecoleccion" Member="Recoleccion" ThisKey="idRecoleccion" OtherKey="idRecoleccion" Type="Recoleccion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Distrito" Member="Distritos">
+    <Type Name="Distrito">
+      <Column Name="idDistrito" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idCanton" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="nombreDistrito" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Distrito_Direccione" Member="Direcciones" ThisKey="idDistrito" OtherKey="idDistrito" Type="Direccione" />
+      <Association Name="Canton_Distrito" Member="Canton" ThisKey="idCanton" OtherKey="idCanton" Type="Canton" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EstadosCupon" Member="EstadosCupons">
+    <Type Name="EstadosCupon">
+      <Column Name="idEstadosCupon" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="EstadosCupon_Cupone" Member="Cupones" ThisKey="idEstadosCupon" OtherKey="idEstadosCupon" Type="Cupone" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EstadosRecoleccion" Member="EstadosRecoleccions">
+    <Type Name="EstadosRecoleccion">
+      <Column Name="idEstadosRecoleccion" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NombreEstado" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="EstadosRecoleccion_Recoleccion" Member="Recoleccions" ThisKey="idEstadosRecoleccion" OtherKey="idEstadosRecoleccion" Type="Recoleccion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InventarioMaterial" Member="InventarioMaterials">
+    <Type Name="InventarioMaterial">
+      <Column Name="idInventarioMaterial" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idMaterial" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="peso" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
+      <Association Name="InventarioMaterial_CuentasXcobrar" Member="CuentasXcobrars" ThisKey="idInventarioMaterial" OtherKey="idInventarioMaterial" Type="CuentasXcobrar" />
+      <Association Name="Material_InventarioMaterial" Member="Material" ThisKey="idMaterial" OtherKey="idMaterial" Type="Material" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Material" Member="Materials">
+    <Type Name="Material">
+      <Column Name="idMaterial" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="descripcionMaterial" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Material_InventarioMaterial" Member="InventarioMaterials" ThisKey="idMaterial" OtherKey="idMaterial" Type="InventarioMaterial" />
+      <Association Name="Material_MaterialesXrecoleccion" Member="MaterialesXrecoleccions" ThisKey="idMaterial" OtherKey="idMaterial" Type="MaterialesXrecoleccion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MaterialesXrecoleccion" Member="MaterialesXrecoleccions">
+    <Type Name="MaterialesXrecoleccion">
+      <Column Name="idMaterialesXrecoleccion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idRecoleccion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idMaterial" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="pesoRecoleccion" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
+      <Association Name="Material_MaterialesXrecoleccion" Member="Material" ThisKey="idMaterial" OtherKey="idMaterial" Type="Material" IsForeignKey="true" />
+      <Association Name="Recoleccion_MaterialesXrecoleccion" Member="Recoleccion" ThisKey="idRecoleccion" OtherKey="idRecoleccion" Type="Recoleccion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Persona" Member="Personas">
+    <Type Name="Persona">
+      <Column Name="idPersona" Type="System.String" DbType="VarChar(16) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="apellidos" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="Persona_Cliente" Member="Clientes" ThisKey="idPersona" OtherKey="idPersona" Type="Cliente" />
+      <Association Name="Persona_Colaboradore" Member="Colaboradores" ThisKey="idPersona" OtherKey="idPersona" Type="Colaboradore" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Provincia" Member="Provincias">
+    <Type Name="Provincia">
+      <Column Name="idProvincia" Type="System.Byte" DbType="TinyInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombreProvincia" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Provincia_AreaCobertura" Member="AreaCoberturas" ThisKey="idProvincia" OtherKey="idProvincia" Type="AreaCobertura" />
+      <Association Name="Provincia_Canton" Member="Cantons" ThisKey="idProvincia" OtherKey="idProvincia" Type="Canton" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Recoleccion" Member="Recoleccions">
+    <Type Name="Recoleccion">
+      <Column Name="idRecoleccion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idCliente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idEstadosRecoleccion" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="totalHojas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fechaRecoleccion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Recoleccion_Agenda" Member="Agendas" ThisKey="idRecoleccion" OtherKey="idRecoleccion" Type="Agenda" />
+      <Association Name="Recoleccion_DireccionXrecoleccion" Member="DireccionXrecoleccions" ThisKey="idRecoleccion" OtherKey="idRecoleccion" Type="DireccionXrecoleccion" />
+      <Association Name="Recoleccion_MaterialesXrecoleccion" Member="MaterialesXrecoleccions" ThisKey="idRecoleccion" OtherKey="idRecoleccion" Type="MaterialesXrecoleccion" />
+      <Association Name="Cliente_Recoleccion" Member="Cliente" ThisKey="idCliente" OtherKey="idCliente" Type="Cliente" IsForeignKey="true" />
+      <Association Name="EstadosRecoleccion_Recoleccion" Member="EstadosRecoleccion" ThisKey="idEstadosRecoleccion" OtherKey="idEstadosRecoleccion" Type="EstadosRecoleccion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.SP_crearDetalleCupon" Method="SP_crearDetalleCupon">
+    <Parameter Name="idComercio" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="DescCupon" Parameter="descCupon" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="cantHojas" Type="System.Int16" DbType="SmallInt" />
+    <Parameter Name="imagen" Type="System.String" DbType="VarChar(500)" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>
